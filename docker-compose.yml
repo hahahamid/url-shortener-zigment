@@ -1,0 +1,26 @@
+version: '3'
+services:
+  app:
+    build: .
+    ports:
+      - '3000:3000'
+    depends_on:
+      - db
+    environment:
+      - DATABASE_URL=${DATABASE_URL}
+    env_file:
+      - .env
+
+  ## Since I am using Neon database (a managed PostgreSQL service),
+  ## I don't really need a local db service, thus I haven't included the db service in the docker-compose file.
+
+  # db:
+  #   image: postgres:latest
+  #   ports:
+  #     - '5432:5432'
+  #   environment:
+  #     POSTGRES_USER: ${POSTGRES_USER}
+  #     POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+  #     POSTGRES_DB: ${POSTGRES_DB}
+  #   volumes:
+  #     - pgdata:/var/lib/postgresql/data

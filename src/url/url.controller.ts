@@ -26,7 +26,9 @@ import {
 @Controller()
 export class UrlController {
   constructor(private readonly urlService: UrlService) {}
-
+ 
+  // This endpoint shortens a given URL and returns the shortened URL.
+  
   @Post('shorten')
   @ApiOperation({ summary: 'Shorten a URL' })
   @ApiBody({ type: CreateUrlDto })
@@ -44,6 +46,9 @@ export class UrlController {
     const result = await this.urlService.shorten(createUrlDto.url);
     return { shortUrl: result.shortUrl };
   }
+
+
+  // This endpoint retrieves stats for a shortened URL, including the original URL, number of visits, and creation date.
 
   @Get('stats/:hash')
   @ApiOperation({ summary: 'Get stats for a shortened URL' })
@@ -74,6 +79,9 @@ export class UrlController {
     }
   }
 
+
+  // This endpoint retrieves the total number of redirects across all shortened URLs.
+
   @Get('metrics')
   @ApiOperation({ summary: 'Get total redirect count' })
   @ApiResponse({
@@ -90,6 +98,9 @@ export class UrlController {
     return { totalRedirects };
   }
 
+
+  // This endpoint redirects to the original URL based on the shortened URL hash.
+  
   @Get(':hash')
   @ApiOperation({ summary: 'Redirect to the original URL' })
   @ApiParam({
